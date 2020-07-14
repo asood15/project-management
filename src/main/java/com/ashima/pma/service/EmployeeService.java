@@ -1,33 +1,29 @@
 package com.ashima.pma.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ashima.pma.dao.EmployeeRepository;
+import com.ashima.pma.dto.EmployeeProject;
+import com.ashima.pma.entities.Employee;
 
 @Service
 public class EmployeeService {
 
-//	// field injection
-//	@Autowired
-//	EmployeeRepository empRepo1;
-//	
-//	// constructor injection
-//	EmployeeRepository empRepo2;
-//	public EmployeeService(EmployeeRepository empRepo) {
-//		this.empRepo2 = empRepo;
-//	}
-//	
-//	// setter injection
-//	EmployeeRepository empRepo3;
-//	@Autowired
-//	public void setEmpRepo3(EmployeeRepository empRepo3) {
-//		this.empRepo3 = empRepo3;
-//	}
+	@Autowired 
+	EmployeeRepository empRepo;
 	
-	@Autowired
-	@Qualifier("staffRepoImpl1")
-	StaffRepo repo;
+	public List<Employee> getEmployees() {
+		return empRepo.findAll();
+	}
 	
+	public Employee saveEmployee(Employee emp) {
+		return empRepo.save(emp);
+	}
+	
+	public List<EmployeeProject> getEmployeeProjects() {
+		return empRepo.employeeProjects();
+	}
 }
