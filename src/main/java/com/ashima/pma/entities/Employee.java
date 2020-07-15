@@ -12,6 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+
+import com.ashima.pma.validations.UniqueValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 @Entity
 public class Employee {
@@ -21,8 +27,17 @@ public class Employee {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "employee_seq")
 	private long employeeId;
 	
+	@NotNull
+	@Size(min=2, max=50)
 	private String firstName;
+	
+	@NotNull
+	@Size(min=1, max=50)
 	private String lastName;
+	
+	@NotNull
+	@Email
+	@UniqueValue
 	private String email;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
@@ -30,6 +45,7 @@ public class Employee {
 	@JoinTable(name="project_employee", 
 	joinColumns = @JoinColumn(name="employee_id"),
 	inverseJoinColumns = @JoinColumn(name="project_id"))
+	@JsonIgnore
 	private List<Project> projects;
 	
 	public Employee() {
