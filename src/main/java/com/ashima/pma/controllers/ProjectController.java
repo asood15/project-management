@@ -31,7 +31,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping(path="/save")
-	public String createProject(Project project) {
+	public String createProject(Model model, Project project) {
 		projectService.saveProject(project);
 		return "redirect:/projects";
 	}
