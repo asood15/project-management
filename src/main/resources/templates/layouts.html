@@ -12,6 +12,25 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  
+	  <script type="text/javascript">
+	var path = window.location.pathname;
+	$(document).ready(function () {
+		if (path.indexOf("employees") > 0) {
+			$('#empLink').addClass('active');
+		} else if (path.indexOf("timelines") > 0) {
+			$('#timelineLink').addClass('active');
+		} else if (path.indexOf("projects") > 0) {
+			$('#projectLink').addClass('active');
+		} else {			
+			$('#homeLink').addClass('active');
+		}
+	})
+</script>
+	  
 </head>
 
 
@@ -23,14 +42,17 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item" id="homeLink">
+        <a  class="nav-link" th:href="@{/}">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/employees}">Employees</a>
+      <li class="nav-item" id="empLink">
+        <a  class="nav-link" th:href="@{/employees}">Employees</a>
       </li>
-       <li class="nav-item">
-        <a class="nav-link" th:href="@{/projects}">Projects</a>
+       <li class="nav-item" id="projectLink">
+        <a  class="nav-link" th:href="@{/projects}">Projects</a>
+      </li>
+      <li class="nav-item" id="timelineLink">
+        <a class="nav-link"  th:href="@{/projects/timelines}">Timelines</a>
       </li>
     </ul>
   </div>
