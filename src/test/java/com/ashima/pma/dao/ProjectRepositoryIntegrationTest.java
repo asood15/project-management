@@ -28,7 +28,7 @@ public class ProjectRepositoryIntegrationTest {
 	
 	@Test
 	public void ifNewProjectSaved_thenSuccess() {
-		Project newProject = new Project("New Test Project", "COMPLETE", "Testing...");
+		Project newProject = new Project("New Test Project", "COMPLETE", "Testing...", null, null);
 		proRepo.save(newProject);
 		
 		assertEquals(5, proRepo.findAll().size());

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ashima.pma.dao.ProjectRepository;
 import com.ashima.pma.dto.ProjectStageCount;
+import com.ashima.pma.dto.TimeChartData;
 import com.ashima.pma.entities.Project;
 
 @Service
@@ -61,5 +62,9 @@ public class ProjectService {
 			 System.out.println("Error occurred, no project found with id " + id);
 			 return false;
 		 }
+	}
+	
+	public List<TimeChartData> getTimeData() {
+		return projectRepo.getTimeData();
 	}
 }

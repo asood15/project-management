@@ -1,6 +1,7 @@
 package com.ashima.pma.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,8 +29,15 @@ public class Project {
 	@SequenceGenerator(name="project_seq", sequenceName = "project_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "project_seq")
 	private long projectId;
+	
+	@NotBlank(message="*Project name cannot be empty")
+	@Size(min=2, max=50, message="*Project name should be between 2-50 characters")
 	private String name;
+	
+	@NotBlank(message="*Stage cannot be empty")
 	private String stage;
+	
+	@NotBlank(message="*Description cannot be empty")
 	private String description;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
@@ -35,15 +48,26 @@ public class Project {
 	@JsonIgnore
 	private List<Employee> employees;
 	
+	@NotNull(message="Start Date cannot be empty")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date startDate;
+	
+	@NotNull(message="End Date cannot be empty")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date endDate;
+	
+	
 	public Project() {
 		
 	}
 	
-	public Project(String name, String stage, String description) {
+	public Project(String name, String stage, String description, Date startDate, Date endDate) {
 		super();
 		this.name = name;
 		this.stage = stage;
 		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 	
 	public long getProjectId() {
@@ -86,6 +110,23 @@ public class Project {
 		employees.add(emp);
 		
 	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	
 	
 	
 }
