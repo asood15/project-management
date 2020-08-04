@@ -5,29 +5,60 @@
 
 <body>
 	<nav th:replace="layouts::navbar"></nav>
+	<br><br>
 	
 	<div class="container">
 		<form th:action="@{/projects/save}" method="POST" th:object="${project}">
+		<input type="hidden" th:field="${project.projectId}"/>
 		
-		<input type="text" placeholder="Project Name" th:field="${project.name}">
+		<div class="form-group row">
+			<label class="col-lg-2">Project Name: </label>
+			<input type="text" placeholder="Project Name" th:field="${project.name}">
+			<span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="${project.name}"></span>
+		</div>
 		
-		<select th:field="${project.stage}">
-			<option th:value="NOTSTARTED"> Not Started</option>
-			<option th:value="INPROGRESS"> In Progress</option>
-			<option th:value="COMPLETED"> Completed</option>
-		</select>
+		<div class="form-group row">
+		<label class="col-lg-2">Stage:  </label>
+			<select th:field="${project.stage}">
+				<option th:value="NOTSTARTED"> Not Started</option>
+				<option th:value="INPROGRESS"> In Progress</option>
+				<option th:value="COMPLETED"> Completed</option>
+			</select>
+			<span style="color:red" th:if="${#fields.hasErrors('stage')}" th:errors="${project.stage}"></span>
+		</div>
 		
-		<textarea type="text" placeholder="Enter Project Description" th:field="${project.description}"></textarea>
+		<div class="form-group row">
+			<label class="col-lg-2"> Description: </label>
+				<textarea class="col-lg-3" placeholder="Enter Project Description" th:field="${project.description}"></textarea>
+			<span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="${project.description}"></span>
+		</div>
 		
-		<select multiple="multiple" th:field="${project.employees}">
-			<option th:each = "employee : ${allEmployees}" 
-			th:value="${employee.employeeId}" th:text="${employee.firstName}"> </option>
-		</select>
+		<div class="form-group row">
+		<label class="col-lg-2"> Employees: </label>
+			<select multiple="multiple" th:field="${project.employees}">
+				<option th:each = "employee : ${allEmployees}" 
+				th:value="${employee.employeeId}" th:text="${employee.firstName}"> </option>
+			</select>
+		</div>	
 		
-		<button type="submit">Create Project</button>
+		<div class="form-group row">
+			<label class="col-lg-2"> Start Date: </label>
+				<input id="startDate" type="text" class="col-lg-3" placeholder="Start Date" th:field="${project.startDate}">
+			<span style="color:red" th:if="${#fields.hasErrors('startDate')}" th:errors="${project.startDate}"></span>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-lg-2"> End Date: </label>
+				<input id="endDate" type="text" class="col-lg-3" placeholder="End Date" th:field="${project.endDate}">
+			<span style="color:red" th:if="${#fields.hasErrors('endDate')}" th:errors="${project.endDate}"></span>
+		</div>
+		
+		<button type="submit" class="col-lg-2 btn btn-primary">Create Project</button>
 		
 		</form>
 	</div>
-
+<script type="text/javascript">
+	$("#startDate,#endDate").datepicker();
+</script>
 </body>
 </html>
